@@ -6,6 +6,7 @@
 python gcodeTo3DPCode.py test.gcode config.json
 # python gcodeTo3DPCode.py <input gCode file> <config file>
 ```
+3. See your output in `output.txt`
 
 ## How to Config
 
