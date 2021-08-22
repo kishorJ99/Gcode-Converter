@@ -1,0 +1,14 @@
+{
+    "linesToReplace": [
+        {
+            "lookFor": "M205",
+            "replaceWith": ["p1 {0} {1} {1}", "p2 0.5 5.5"]
+
+        },
+        {
+            "lookFor": "G1",
+            "replaceWith": ["P5 {0}"]
+
+        }
+    ]
+}
