@@ -1,6 +1,4 @@
 # Gcode-Converter
-Just a quick and dirty gCode Converter for the lab.
-
 ## How to Run
 1. `cd` into the repo/folder
 2. Run the command below
