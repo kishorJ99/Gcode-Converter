@@ -1,6 +1,4 @@
 # Gcode-Converter
-Just a quick and dirty gCode Converter for the lab.
-
 ## How to Run
 1. `cd` into the repo/folder
 2. Run the command below
@@ -8,6 +6,7 @@ Just a quick and dirty gCode Converter for the lab.
 python gcodeTo3DPCode.py test.gcode config.json
 # python gcodeTo3DPCode.py <input gCode file> <config file>
 ```
+3. See your output in `output.txt`
 
 ## How to Config
 
