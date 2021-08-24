@@ -1,14 +1,7 @@
 {
-    "linesToReplace": [
-        {
-            "lookFor": "M205",
-            "replaceWith": ["p1 {0} {1} {1}", "p2 0.5 5.5"]
+    "startOn": [["G1", "E"]],
+    "stopOn" : [["G0"], ["G1", "F1000"]],
+    "startCommand" : ["start1", "start2"],
+    "stopCommand" : ["stop1", "stop2"]
 
-        },
-        {
-            "lookFor": "G1",
-            "replaceWith": ["P5 {0}"]
-
-        }
-    ]
 }

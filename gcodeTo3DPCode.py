@@ -28,7 +28,7 @@ if len(sys.argv) == 3:
     inputFileName = sys.argv[1]
     configFileName = sys.argv[2]
     
-    #Load Config
+    # Load Config
     config = None
     with open(configFileName) as f:
         config = json.load(f)
@@ -40,38 +40,52 @@ if len(sys.argv) == 3:
 
     printProgressBar(0, len(commands), prefix = 'Progress:', suffix = 'Complete', length = 50)
 
-    # All Commands we are replacing
-    lookFor = list(i["lookFor"] for i in config["linesToReplace"])
-
     # No. lines replaced
     count = 0
     
+    currentApplied = False
+
+    def itemInArrayStartsWith(arr, string):
+        for i in arr:
+            if i.startswith(string):
+                return True
+        return False
+
+
     i = 0
     while i < len(commands):
+        if not (commands[i].startswith(";")):
+            if currentApplied:
 
-        for j in lookFor:
-            if  j in commands[i]:
-                
-                currentCommandArr = commands[i].strip().split(" ")
+                for j in config["stopOn"]:
+                    jContained = [itemInArrayStartsWith(commands[i].split(" "), k) for k in j]
 
-                # Remove the command it self e.g G1 so we can have the parameters
-                currentCommandArr.pop(0)
+                    if all(jContained):
+                        for k in config["stopCommand"]:
+                            commands.insert(i, k + "\n")
+                        currentApplied = False
+                        count += len(config["startCommand"])
+                        i += len(config["startCommand"])
+                        break
+            else:
+                for j in config["startOn"]:
+                    
+                    jContained = [itemInArrayStartsWith(commands[i].split(" "), k) for k in j]
 
-                replacementCommandsArr = config["linesToReplace"][lookFor.index(j)]["replaceWith"]
-                
-                commands.pop(i)
-                
-                for k in reversed(replacementCommandsArr):
-                    commands.insert(i, k.format(*currentCommandArr) + "\n")
-                
-                count += 1
-                break
+                    if all(jContained):
+
+                        for k in config["startCommand"]:
+                            commands.insert(i, k + "\n")
+                        currentApplied = True
+                        count += len(config["startCommand"])
+                        i += len(config["startCommand"])
+                        break
 
         i += 1
         printProgressBar(i, len(commands), prefix = 'Progress:', suffix = 'Complete', length = 50)
 
 
-    print("No. Lines Replaced: " + str(count))
+    print("No. Lines Inserted: " + str(count))
     output = "".join(commands)
     f = open("Output.txt", "a")
     f.write(output)
